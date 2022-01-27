@@ -4,10 +4,22 @@ FROM php:7.4-apache
 
 RUN a2enmod rewrite expires
 
+RUN apt-get update \
+  && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  libfreetype6-dev \
+  libjpeg62-turbo-dev \
+  libpng-dev \
+  git \
+  rsync \
+  && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install gd opcache zip mbstring
+
+
 # install the PHP extensions we need
-RUN apt-get update && apt-get install -y git rsync libpng-dev libjpeg-dev zlib1g-dev && rm -rf /var/lib/apt/lists/* \
-	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
-	&& docker-php-ext-install gd opcache zip mbstring
+#RUN apt-get update && apt-get install -y git rsync libpng-dev libjpeg-dev zlib1g-dev && rm -rf /var/lib/apt/lists/* \
+#	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+#	&& docker-php-ext-install gd opcache zip mbstring
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
