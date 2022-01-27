@@ -1,7 +1,5 @@
 FROM php:7.4-apache
 
-# Based on the official Wordpress docker file
-
 RUN a2enmod rewrite expires
 
 RUN apt-get update \
@@ -48,7 +46,7 @@ RUN curl -o grav.tar.gz -SL https://github.com/getgrav/grav/archive/${GRAV_VERSI
 	&& mkdir -p /tmp/grav \
 	&& tar -xzf grav.tar.gz -C /tmp \
 	&& rsync -a /tmp/grav-${GRAV_VERSION}/ /var/www/html --exclude user \
-	&& mkdir -p /var/www/html/user/plugins
+	&& mkdir -p /var/www/html/user/plugins \
 	&& /var/www/html/bin/grav install \
 	&& chown -R www-data:www-data /var/www/html \
 	&& git config --global user.email "grav@getgrav.org" \
