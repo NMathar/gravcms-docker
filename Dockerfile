@@ -11,9 +11,13 @@ RUN apt-get update \
   libpng-dev \
   git \
   rsync \
+  libzip-dev \
+  zip \
   && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-configure gd --with-freetype --with-jpeg && docker-php-ext-install gd opcache zip mbstring
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
+&& docker-php-ext-configure opcache --enable-opcache \
+&& docker-php-ext-install gd opcache zip mbstring
 
 
 # install the PHP extensions we need
