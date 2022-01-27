@@ -6,8 +6,8 @@ RUN a2enmod rewrite expires
 
 # install the PHP extensions we need
 RUN apt-get update && apt-get install -y git rsync libpng-dev libjpeg-dev zlib1g-dev && rm -rf /var/lib/apt/lists/* \
-	&& docker-php-ext-configure gd --with-png-dir=/usr --with-jpeg-dir=/usr \
-	&& docker-php-ext-install gd mysqli opcache zip mbstring
+	&& docker-php-ext-configure gd --with-freetype --with-jpeg \
+	&& docker-php-ext-install gd opcache zip mbstring
 
 # set recommended PHP.ini settings
 # see https://secure.php.net/manual/en/opcache.installation.php
@@ -26,7 +26,7 @@ RUN { \
 		echo 'post_max_size=25M'; \
         } > /usr/local/etc/php/conf.d/custom-default.ini
 
-ENV GRAV_VERSION 1.6.15
+ENV GRAV_VERSION 1.7.28
 RUN curl -o grav.tar.gz -SL https://github.com/getgrav/grav/archive/${GRAV_VERSION}.tar.gz \
 	&& mkdir -p /tmp/grav \
 	&& tar -xzf grav.tar.gz -C /tmp \
