@@ -48,6 +48,7 @@ RUN curl -o grav.tar.gz -SL https://github.com/getgrav/grav/archive/${GRAV_VERSI
 	&& mkdir -p /tmp/grav \
 	&& tar -xzf grav.tar.gz -C /tmp \
 	&& rsync -a /tmp/grav-${GRAV_VERSION}/ /var/www/html --exclude user \
+	&& mkdir -p /var/www/html/user/plugins
 	&& /var/www/html/bin/grav install \
 	&& chown -R www-data:www-data /var/www/html \
 	&& git config --global user.email "grav@getgrav.org" \
