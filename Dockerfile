@@ -13,11 +13,12 @@ RUN apt-get update \
   rsync \
   libzip-dev \
   zip \
+  libonig-dev \
   && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
 && docker-php-ext-configure opcache --enable-opcache \
-&& docker-php-ext-install gd opcache zip mbstring
+&& docker-php-ext-install gd opcache zip
 
 
 # install the PHP extensions we need
